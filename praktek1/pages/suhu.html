@@ -1,0 +1,74 @@
+<template>
+  <div class="page">
+    <div class="navbar warna-hijau">
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon f7-icons teks-putih">multiply</i>
+          </a>
+        </div>
+        <div class="title teks-putih">Konversi Suhu</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner sliding">
+            <div class="left">
+              <a href="#" class="link back">
+                <i class="icon icon-back"></i>
+                <span class="if-not-md">Back</span>
+              </a>
+            </div>
+            <div class="title">Form Inputs</div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="block-title">Masukkan Suhu</div>
+          <div class="list inline-labels no-hairlines-md">
+            <ul>
+              <li class="item-content item-input">
+                <div class="item-media">
+                  <i class="f7-icons">folder_fill_badge_plus</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title item-label"> Suhu :</div>
+                  <div class="item-input-wrap">
+                    <input type="number" placeholder="Angka Suhu" id="txtnilai" />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+              
+            </ul>
+          </div>
+
+        
+            <p class="segmented" style="margin : 0px 10px 0px 10px">
+              <button class="button button-outline xxx" id="btnkelvin" @click="${()=>tombolaktif('btnkelvin')}">Kelv</button>
+              <button class="button button-outline xxx" id="btnreamur" @click="${()=>tombolaktif('btnreamur')}">Ream</button>
+              <button class="button button-outline xxx" id="btnfahrenheit" @click="${()=>tombolaktif('btnfahrenheit')}">Fahr</button>
+              <button class="button button-outline xxx" id="btncelcius" @click="${()=>tombolaktif('btncelcius')}">Cels</button>
+            </p>
+            <p class="row" style="margin : 15px 10px 0px 10px">
+              <button class="col button button-large button-raised button-fill color-blue" id="btnhitung" @click="${()=>hitungsuhu()}">Hitung</button>
+              <button class="col button button-large button-raised button-fill color-red" id="btnreset" @click="${()=>resetsuhu()}">Reset</button>
+            </p>
+            <div class="row baris-icon" style="text-align: center;">
+              <p class="col" id="h1">suhu1</p>
+              <p class="col" id="h2">suhu2</p>
+              <p class="col" id="h3">suhu3</p>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+</template>
+<script>
+  export default function (props, ctx) {
+    return $render;
+  }
+</script>

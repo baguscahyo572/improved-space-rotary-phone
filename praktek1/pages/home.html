@@ -1,0 +1,138 @@
+<template>
+  <div class="page page-home">
+    <div class="navbar" style="background-color: #16a085">
+      <!-- header -->
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link" @click=${showToastTop} style="color: white">
+            <i class="icon f7-icons"> ellipsis_vertical </i>
+          </a>
+        </div>
+        <div class="title" style="color: white">Hiccup</div>
+        
+        <div class="right">
+          <a href="#" class="link" @click="${()=>camera()}" style="color: white">
+            <i class="icon f7-icons" id="#"> camera </i>
+          </a>
+          <a href="#" class="link" @click="${()=>senter()}" style="color: white">
+            <i class="icon f7-icons" id="btnsenter"> lightbulb </i>
+          </a>
+          
+        </div>
+      </div>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="margin-top: 55px">
+      <path fill="#16a085" fill-opacity="1" d="M0,224L40,213.3C80,203,160,181,240,154.7C320,128,400,96,480,106.7C560,117,640,171,720,176C800,181,880,139,960,117.3C1040,96,1120,96,1200,101.3C1280,107,1360,117,1400,122.7L1440,128L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z">
+      </path>
+    </svg>
+    <div class="toolbar tabbar tabbar-labels toolbar-bottom tabs-swipeable no-shadow warna-putih">
+        <!-- footer -->
+      <div class="toolbar-inner">
+        <a href="#tab-menu" class="tab-link tab-link-active">
+          <i class="icon f7-icons teks-hijau">circle_grid_3x3_fill</i>
+          <span class="tabbar-label teks-hijau">Menu</span>
+        </a>
+        <a href="#tab-versi" class="tab-link">
+          <i class="icon f7-icons teks-hijau">info</i>
+          <span class="tabbar-label teks-hijau">Versi</span>
+        </a>
+        <a href="#tab-tentang" class="tab-link">
+          <i class="icon f7-icons teks-hijau" >device_tablet_portrait</i>
+          <span class="tabbar-label teks-hijau">Tentang</span>
+        </a>
+      </div>
+      <div class="tabs" style="margin-top: -585px;">
+          <div id="tab-menu" class="page-content tab tab-active">
+            <div data-pagination='{"el": ".swiper-pagination"}' data-loop="true" class="swiper-container swiper-init no-shadow" 
+            style="margin-bottom: 15px;"> 
+            <!-- slider -->
+            <div class="swiper-wrapper"> 
+              <div class="swiper-slide">
+                <img src="img/1.jpg" class="gambar-slider" />
+              </div> 
+              <div class="swiper-slide">
+                <img src="img/2.jpg" class="gambar-slider" />
+              </div>
+              <div class="swiper-slide">
+                <img src="img/3.jpg" class="gambar-slider" />
+              </div>
+              <div class="swiper-slide">
+                <img src="img/4.jpg" class="gambar-slider" />
+              </div>
+              <div class="swiper-slide">
+                <img src="img/5.jpg" class="gambar-slider" />
+              </div>
+              </div> 
+            </div>
+          <!-- menu -->
+            <div class="row baris-icon"> 
+              <a href="/hitung/" class="col teks-tengah">
+              <img src="img/pure_gallery.png" class="besar-icon" /><br/>Hitung Suhu
+              </a> 
+              <a href="" class="col teks-tengah" @click="${()=>finger()}">
+              <img src="img/sociallix.png" class="besar-icon" /><br/>Fingerprint 
+              </a> 
+              <a href="/biodata/" class="col teks-tengah">
+              <img src="img/wallhub.png" class="besar-icon" /><br/>Biodata
+              </a> 
+            </div>
+
+            <div class="row baris-icon"> 
+              <a href="/tambahbiodata/" class="col teks-tengah">
+              <img src="img/simplemind_pro.png" class="besar-icon" /><br/>Menu 4 
+              </a> 
+              <a href="#" class="col teks-tengah">
+              <img src="img/wallrox_wallpapers.png" class="besar-icon" /><br/>Menu 5 
+              </a> 
+              <a href="#" class="col teks-tengah">
+              <img src="img/user_guide.png" class="besar-icon" /><br/>Menu 6 
+              </a> 
+            </div>
+          </div>
+          <!-- footer -->
+          <div id="tab-versi" class="page-content tab"> 
+            <div class="row baris-icon teks-putih font17">
+              <p style="margin-left: 5%;" >Halaman Versi Aplikasi</p> 
+            </div>
+          </div>
+          <div id="tab-tentang" class="page-content tab"> 
+            <div class="row baris-icon teks-putih font17">
+              <p style="margin-left: 5%;">Halaman Tentang Aplikasi</p> 
+            </div>
+          </div>
+      </div>
+      
+      
+      <div class="page-content"></div>
+    </div>
+  </div>
+</template>
+<script>
+  export default function (props, {ctx, $f7, $theme, $on }) {
+    
+    let toastTop;
+
+    const showToastTop = () => {
+      // Create toast
+      if (!toastTop) {
+        toastTop = $f7.toast.create({
+          text: 'Copyright@ BagusCahyoS - 4118041',
+          position: 'top',
+          closeTimeout: 2000,
+        });
+      }
+      // Open it
+      toastTop.open();
+    }
+    $on('pageBeforeOut', () => {
+      $f7.toast.close();
+    })
+
+    $on('pageBeforeRemove', () => {
+      // Destroy toasts when page removed
+      if (toastTop) toastTop.destroy();
+    })
+
+    return $render;
+  }
+</script>

@@ -1,0 +1,85 @@
+<template>
+    <div class="page">
+      <div class="navbar warna-hijau">
+        <div class="navbar-inner">
+          <div class="left">
+            <a href="#" class="link back">
+              <i class="icon f7-icons teks-putih">multiply</i>
+            </a>
+          </div>
+            <div class="title teks-putih">Tambah Biodata</div>
+          <div class="right">
+            <a href="#" class="link" @click="${() => kosong_biodata ()}" style="color: white">
+                <i class="icon f7-icons" id="#"> arrow_2_circlepath_circle </i>
+              </a>
+            <a href="#" class="link" @click="${() => tambah_biodata()} style="color: white">
+              <i class="icon f7-icons" id="#"> checkmark_circle_fill </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- tambah biodata -->
+      <div style="background-color: rgb(253, 253, 239); margin-top: 54px; height: 3798px;"></div>
+      <div class="page-content" style="margin-top: -3850px;">
+        <div class="card card-outline radius10" style="margin-left: 10px;margin-right: 10px; margin-bottom: 10px;">
+            <div class="card-content card-content-padding">
+                <div class="row">
+                    <div class="col-100">
+                        <font style="font-style: 20px;"><b>Tambah Biodata</b></font><br />
+                        <div class="list" id="frm1">
+                            <!-- item nama -->
+                            <div class="item-content item-input">
+                                <div class="col-15">
+                                    <div class="item-media"><i class="icon f7-icons">person_circle_fill</i></div>
+                                </div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Nama*</div>
+                                    <div class="item-input-wrap"><input type="text" id="txtnama"
+                                            placeholder="ex:Hiccup" /></div>
+                                </div>
+                            </div>
+                            <!-- item nama -->
+                            <div class="item-content item-input">
+                                <div class="col-15">
+                                    <div class="item-media"><i class="icon f7-icons">layers_alt_fill</i></div>
+                                </div>
+                                <div class="item-inner">
+                                    <div class="item-title item-label">Tanggal Lahir*</div>
+                                    <div class="item-input-wrap"><input type="date" id="txttgl_lahir"
+                                            placeholder="ex:28/12/1999" /></div>
+                                </div>
+                            </div>
+                            <!-- item Alamat -->
+                            <div class="item-content item-input">
+                                <div class="col-15">
+                                    <div class="item-media"><i class="icon f7-icons">house_fill</i></div>
+                                </div>
+                                <div class="item-inner kosong">
+                                    <div class="item-title item-label">Alamat*</div>
+                                    <div class="item-input-wrap"><input type="text" id="txtalamat"
+                                            placeholder="ex:Jombang" /></div>
+                                </div>
+                            </div>
+                            <!-- tombol simpan -->
+                            <div class="item-content item-input row">
+                                <button type="button" class=" col button button-fill color-green"
+                                    @click="${() => tambah_biodata()}">Simpan</button>
+                                <button type="button" class=" col button button-fill color-red"
+                                    @click="${() => kosong_biodata ()}">Kosong</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+
+    </div>
+
+  
+  </template>
+    <script>
+        export default (props, ctx) => {
+            return $render;
+        }
+    </script>

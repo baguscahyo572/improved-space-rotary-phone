@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#fff">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+  <title>praktek1</title>
+  <link rel="stylesheet" href="core/framework7-bundle.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="apple-touch-icon" href="img/f7-icon-square.png">
+  <link rel="icon" href="img/f7-icon.png">
+</head>
+<body>
+    <div id="app">
+        <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/"></div>
+    </div>
+      
+    <script src="core/framework7-bundle.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script src="cordova.js"></script>
+    <script>
+      let pilihsuhu = "";
+      function tombolaktif(id){
+        $(".xxx").removeClass("button-active");
+        $("#" + id).addClass("button-active");
+        pilihsuhu = id;
+      }
+      function hitungsuhu(){
+        var x = $("#txtnilai").val();
+        if(x==""){
+          app.dialog.alert("Angka Suhu Masih Kosong");
+          return;
+        }
+        if(pilihsuhu == ""){
+          app.dialog.alert("Suhu Masih Kosong");
+          return;
+        }
+        if(pilihsuhu == "btncelcius"){
+          let c2f = ((9/5) * x) + 32;
+          let c2k = parseInt(x) +273;
+          let c2r = (4/5) * x;
+          $("#h1").html("fahrenheit<br>" + c2f );
+          $("#h2").html("kelvin<br>" + c2k );
+          $("#h3").html("reamur<br>" + c2r );
+        }else if (pilihsuhu == "btnreamur"){
+          let r2c = parseInt(x) / 0.8;
+          let r2f = (x * (2.35)) + 32;
+          let r2k =  (x / (2.8)) +273;
+          $("#h1").html("celcius<br>" + r2c );
+          $("#h2").html("fahrenheit<br>" + r2f );
+          $("#h3").html("kelvin<br>" + r2k );
+
+        }else if (pilihsuhu == "btnfahrenheit"){
+          let FtC = ((5/9 * parseInt(x)) - 32);
+          let FtR = ((4/9) * parseInt(x)) - 32;
+          let FtK = ((5/9) * parseInt(x)) + 273;
+          $('#h1').html("celcius<br>" + FtC);
+          $('#h2').html("reamur<br>" + FtR);
+          $('#h3').html("kelvin<br>" + FtK);
+
+        }else 
+        (pilihsuhu == "btnkelvin")
+          
+        
+      }
+      function resetsuhu(){
+          $("#txtnilai").val("");
+          $(".xxx").removeClass("button-active");
+          }
+
+        function camera(){
+          navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
+            destinationType: Camera.DestinationType.DATA_URL
+          });
+
+          function onSuccess(imageData) {
+              var image = document.getElementById('myImage');
+              image.src = "data:image/jpeg;base64," + imageData;
+        }
+      
+
+          function onFail(message) {
+              alert('Failed because: ' + message);
+          }
+      }
+      function senter(){
+        window.plugins.flashlight.available(function(ada) {
+          if (ada) {
+            if(window.plugins.flashlight.isSwitchedOn()){
+              window.plugins.flashlight.switchOff();
+              $("#btnsenter").html("lightbulb");
+            }else{
+              window.plugins.flashlight.switchOn();
+              $("#btnsenter").html("lightbulb_slash");
+            }
+          }else{
+            app.dialog.alert("HP Jadul","error");
+          }
+        });
+ 
+      }
+
+      function finger() {
+        Fingerprint.isAvailable(fingerTersedia, fingerTidakTersedia);
+        }
+
+        function fingerTersedia(result) {
+            Fingerprint.show({
+                    description: "Silahkan Tempel Sidik Jari Anda"
+                },
+                function () {
+                    app.dialog.alert("Fingerprint Terdeteksi Autentikasi Sukses", "Berhasil");
+                },
+                function () {
+                    app.dialog.alert("Fingerprint Tidak Terdeteksi", "Gagal");
+                }
+
+            );
+        }
+
+        function fingerTidakTersedia(error) {
+            app.dialog.alert("Perangkat Anda Tidak Memiliki Fingerprint", "Gagal");
+        }
+      // finger();
+
+
+      // maindatabase
+      let db;
+      konfigurasidb();
+      function konfigurasidb(){
+        db = openDatabase("namadb","1.0","ini db local u/ belajar", 5*1024*1024);
+        db.transaction(function(tx){
+          tx.executeSql("CREATE TABLE IF NOT EXISTS biodata (id VARCHAR(20), nama VARCHAR(100), tgl_lahir date, alamat VARCHAR(100), PRIMARY KEY(id))");
+        })
+      }
+
+      // Tambah biodata
+      function tambah_biodata() {
+            let nama = $("#txtnama").val();
+            let tgl_lahir = $("#txttgl_lahir").val();
+            let alamat = $("#txtalamat").val();
+            if (nama == "" || tgl_lahir == "" || alamat == "") {
+                app.dialog.alert("Ada Isian Yang Masih Kosong !", "Error");
+                return;
+            }
+             let z = String(Date.now());
+            let id = z.slice(0,-2);
+
+            db.transaction(function (tx) {
+                tx.executeSql("INSERT INTO biodata VALUES(?,?,?,?)", [id, nama, tgl_lahir, alamat],
+                    function (tx) {
+                        app.dialog.alert("Biodata Berhasil Di Tambahkan", "Berhasil");
+                        kosong_biodata();
+                    },
+                    function () {
+                        app.dialog.alert("Gagal Di Tambahkan, Cek Isian Anda", "Gagal");
+                    }
+                );
+            });
+        }
+
+        // hapus biodata
+        function kosong_biodata() {  
+          $("#txtnama").val("");
+          $("#txttgl_lahir").val("");
+          $("#txtalamat").val("");
+          // $("#txtid").val("");
+          $(".bio").removeClass("");
+    
+        }
+
+
+      // tampil data
+      function tampildata(){
+        db.transaction(function(tx){
+          tx.executeSql("SELECT * FROM biodata",[],
+          function(tx,hasil){
+            let jmldata = hasil.rows.length;
+            if(jmldata > 0){
+              let dt = "";
+              for(i=0; i<jmldata; i++){
+                let id=hasil.rows.item(i).id;
+                let nama=hasil.rows.item(i).nama;
+                let tgl=hasil.rows.item(i).tgl_lahir;
+                let alamat=hasil.rows.item(i).alamat;
+                dt +=`<li class="swipeout">
+                  <div class="swipeout-content">
+                    <a href="#" class="item-link item-content">
+                      <div class="item-inner">
+                        <div class="item-title-row">
+                          <div class="item-title">${nama}</div>
+                          <div class="item-after">${tgl}</div>
+                        </div>
+                        <div class="item-subtitle">${alamat}</div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="swipeout-actions-right">
+                    <a href="#" class="color-blue">
+                      <i class="icon f7-icons" id="#"> checkmark_circle_fill </i>Update</a>
+                    <a href="#" class="color-red">
+                      <button type="button" class=" col button button-fill color-red"
+                                        @click="${() => delete_mahasiswa ()}">Delete</button>
+                      <i class="icon f7-icons"  @click="${() =>kosong_biodata()}"> ctrash_circle_fill </i>delete</a>
+                  </div>
+                </li>`;
+              }
+              $("#blokbiodata").html(`<ul>${dt}</ul>`);
+            }else{
+              $("#blokbiodata").html("");
+            }
+          });
+        });
+      }
+
+      // updatebiodata
+      function updatebiodata(){
+
+      }
+      
+
+    </script>
+  </body>
+</html>

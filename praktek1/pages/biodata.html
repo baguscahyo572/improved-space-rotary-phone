@@ -1,0 +1,40 @@
+<template>
+    <div class="page">
+      <div class="navbar warna-hijau">
+        <div class="navbar-inner">
+          <div class="left">
+            <a href="#" class="link back">
+              <i class="icon f7-icons teks-putih">multiply</i>
+            </a>
+          </div>
+            <div class="title teks-putih">Data Biodata</div>
+          <div class="right">
+            <a href="/tambahbiodata/" style="color: white">
+              <i class="icon f7-icons" id="#"> folder_badge_plus </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="page-content"> 
+        <div>
+          <font style="font-style: 10px; "><p style="text-indent: 0.3in;"> <i> Geser Untuk Update & Delete data</i></p></font>
+        </div>
+       
+        <div class="list media-list" id="blokbiodata">
+          
+
+        </div>
+      </div>
+    </div>
+
+  
+  </template>
+  <script>
+     export default (props, ctx) => { 
+        var $on = ctx.$on;
+        $on('pageAfterIn', () => {
+          tampildata();
+        })     
+        return $render;
+    }
+  </script>
